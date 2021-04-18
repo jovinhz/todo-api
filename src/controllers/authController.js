@@ -8,27 +8,34 @@ const User = db.User;
 
 const authController = {
   signup: async (req, res) => {
-    let validation = new Validator(req.body, {
-      name: 'required|min:3',
-      email: 'required|email',
-      password: 'required|min:4',
-      password_confirmation: 'required|min:4'
-    });
-
-    validation.check();
-
-    if (req.body.password !== req.body.password_confirmation) {
-      validation.errors.add(
-        'password_confirmation',
-        'Password dan konfirmasi password tidak sesuai.'
-      );
-    }
-
-    if (validation.fails() || validation.errors.has('password_confirmation')) {
-      return res.status(422).send(validation.errors.all());
-    }
-
     try {
+      let validation = new Validator(req.body, {
+        name: 'required|min:3',
+        email: 'required|email',
+        password: 'required|min:4',
+        password_confirmation: 'required|min:4'
+      });
+
+      validation.check();
+
+      if (req.body.password !== req.body.password_confirmation) {
+        validation.errors.add(
+          'password_confirmation',
+          'Password dan konfirmasi password tidak sesuai.'
+        );
+      }
+
+      if (
+        validation.fails() ||
+        validation.errors.has('password_confirmation')
+      ) {
+        return res.status(422).send(validation.errors.all());
+      }
+
+      if (await User.findOne({ where: { email: req.body.email } })) {
+        throw new Error('Email sudah terpakai.');
+      }
+
       const hashedPassword = await bcrypt.hash(req.body.password, 8);
       const user = await User.create({
         email: req.body.email,
@@ -38,8 +45,9 @@ const authController = {
 
       res.status(201).send(user);
     } catch (err) {
-      res.status(400).send({
-        message: 'Kesalahan format data'
+      res.status(500).send(err);
+      res.status(422).send({
+        message: err.message
       });
     }
   },

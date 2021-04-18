@@ -1,6 +1,7 @@
 const express = require('express');
 const authRoutes = require('./routes/auth');
-const todoRoutes = require('./routes/todo');
+const userRoutes = require('./routes/user');
+const taskRoutes = require('./routes/task');
 
 const app = express();
 
@@ -9,6 +10,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // API Router
-app.use('/api', [authRoutes, todoRoutes]);
+app.use('/api', [authRoutes, userRoutes, taskRoutes]);
 
 module.exports = app;
