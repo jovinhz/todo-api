@@ -1,6 +1,6 @@
 # Todo API
 ## Pengenalan
-Merupakan aplikasi todo list.
+Tugas Web Lanjutan. Membuat aplikasi todo list sederhana.
 
 ## Framework / Library
 
@@ -12,6 +12,12 @@ Merupakan aplikasi todo list.
 
 - Postgresql versi 11.
 
+## Telah mengimplementasikan
 
-
-
+- &#10003; Express JS
+- &#10003; Routing
+- &#10003; Query dan Params
+- &#10003; Middleware
+- &#10003; Database
+- &#10003; Async
+- &#10003; File Module

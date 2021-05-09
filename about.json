@@ -1,0 +1,8 @@
+{
+    "api_version": "1.0.0",
+    "last_update": "09 May 2021",
+    "specification": {
+        "server": "express-js",
+        "database": "postgresql"
+    }
+}
